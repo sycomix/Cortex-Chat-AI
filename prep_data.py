@@ -8,7 +8,7 @@ args = parser.parse_args()
 names = []
 
 with open(args.ChatFile, 'r', encoding='utf-8') as csv_file:
-    with open('torch-rnn/chat.txt', 'a', encoding='utf-8') as out_file:
+    with open('chat.txt', 'a', encoding='utf-8') as out_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
         line_count = 0
 

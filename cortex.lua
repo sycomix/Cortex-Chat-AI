@@ -127,13 +127,15 @@ local function GetResponse(ply, msg, config)
 
     start_text = start_text .. "[" .. GetPlayerID(config.personality) .. "]: "
 
-    local cmdline = 'th torch-rnn/sample.lua -verbose 0 -length ' .. config.length .. ' -temperature ' .. config.entropy .. ' -checkpoint ' .. config.model
-    if not config.gpu then
+    local cmdline = 'th sample.lua -verbose 0 -length ' .. config.length .. ' -temperature ' .. config.entropy .. ' -checkpoint ' .. config.model
+    if not config.accelerate then
         cmdline = cmdline .. ' -gpu -1'
     end
     cmdline = cmdline .. ' -start_text "' .. start_text .. '"'
 
-    local f = assert(io.popen('th torch-rnn/sample.lua -verbose 0 -length ' .. config.length .. ' -temperature ' .. config.entropy .. ' -checkpoint ' .. config.model .. ' -start_text "' .. start_text .. '"'))
+    print(cmdline)
+
+    local f = assert(io.popen(cmdline))
     local output = f:read('*all')
     f:close()
 
