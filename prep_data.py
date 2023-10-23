@@ -10,12 +10,9 @@ names = []
 with open(args.ChatFile, 'r', encoding='utf-8') as csv_file:
     with open('chat.txt', 'a', encoding='utf-8') as out_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
-        line_count = 0
-
-        for row in csv_reader:
+        for line_count, row in enumerate(csv_reader):
 
             if line_count == 0:
-                line_count += 1
                 print(f'Columns are {", ".join(row)}')
             else:
                 name = row[0][:-5]
@@ -24,17 +21,15 @@ with open(args.ChatFile, 'r', encoding='utf-8') as csv_file:
                 if name not in names:
                     names.append(name)
 
-                out_file.write('[' + str(names.index(name)) + ']: ' + msg + '\n')
+                out_file.write(f'[{names.index(name)}]: {msg}' + '\n')
 
                 if line_count % 1000 == 0:
                     sys.stdout.write('\r{0} lines processed'.format(line_count))
                     sys.stdout.flush()
-
-                line_count += 1
 
 print('\nWriting {0} indices to name index file'.format(len(names)))
 
 with open('players.txt', 'a', encoding='utf-8') as namefile:
     for n in names:
         idx = names.index(n)
-        namefile.write(str(idx) + " : " + n + '\n')
+        namefile.write(f"{idx} : {n}" + '\n')

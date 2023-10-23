@@ -46,10 +46,7 @@ if __name__ == '__main__':
     print('  Val size: %d' % val_size)
     print('  Test size: %d' % test_size)
 
-  # Choose the datatype based on the vocabulary size
-  dtype = np.uint8
-  if len(token_to_idx) > 255:
-    dtype = np.uint32
+  dtype = np.uint32 if len(token_to_idx) > 255 else np.uint8
   if not args.quiet:
     print('Using dtype ', dtype)
 
